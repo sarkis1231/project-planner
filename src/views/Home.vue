@@ -2,7 +2,7 @@
   <div class="home">
     <div v-if="projects.length">
       <div v-for="project in projects" :key="project.id">
-        <p>{{ project.title }}</p>
+        <SingleProject :project="project" />
       </div>
     </div>
     <div v-else>Loading...</div>
@@ -12,16 +12,19 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { fetchData } from "../utils/fetchData";
-import { Projects } from "../types/projects";
+import { Project } from "../types/project";
+import SingleProject from "../components/SingleProject.vue";
 
 export default defineComponent({
   name: "Home",
   data() {
     return {
-      projects: [] as Projects[] | unknown,
+      projects: [] as Project[] | unknown,
     };
   },
-  components: {},
+  components: {
+    SingleProject,
+  },
   mounted() {
     fetchData("projetcs").then((projects) => {
       this.projects = projects;
