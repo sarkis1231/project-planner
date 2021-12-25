@@ -9,7 +9,7 @@
       </h3>
       <div class="icons">
         <span class="material-icons"> edit </span>
-        <span class="material-icons"> delete </span>
+        <span @click="deleteProjetc" class="material-icons"> delete </span>
         <span class="material-icons"> done </span>
       </div>
     </div>
@@ -22,6 +22,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { Project } from "../types/project";
+import { fetchData } from "../utils/fetchData";
 
 export default defineComponent({
   name: "SingleProject",
@@ -32,6 +33,17 @@ export default defineComponent({
     return {
       showDetails: false as boolean,
     };
+  },
+  methods: {
+    deleteProjetc(): void {
+      fetchData(`projetcs/${this?.project?.id}`, "DELETE")
+        .then(() => {
+          this.$emit("delete", this?.project?.id);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
 });
 </script>

@@ -2,7 +2,7 @@
   <div class="home">
     <div v-if="projects.length">
       <div v-for="project in projects" :key="project.id">
-        <SingleProject :project="project" />
+        <SingleProject :project="project" @delete="handleDeleteProject" />
       </div>
     </div>
     <div v-else>Loading...</div>
@@ -19,16 +19,23 @@ export default defineComponent({
   name: "Home",
   data() {
     return {
-      projects: [] as Project[] | unknown,
+      projects: [] as [] | Project[],
     };
   },
   components: {
     SingleProject,
   },
   mounted() {
-    fetchData("projetcs").then((projects) => {
+    fetchData<Project[]>("projetcs").then((projects) => {
       this.projects = projects;
     });
+  },
+  methods: {
+    handleDeleteProject(projectId: number): void {
+      this.projects = this.projects.filter(
+        ({ id }: { id: number }) => id !== projectId
+      );
+    },
   },
 });
 </script>
