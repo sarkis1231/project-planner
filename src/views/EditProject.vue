@@ -9,6 +9,8 @@
 </template>
 
 <script lang="ts">
+import { Project } from "@/types/project";
+import { fetchData } from "@/utils/fetchData";
 import { updateData } from "@/utils/updateData";
 import { defineComponent } from "vue";
 
@@ -18,12 +20,16 @@ export default defineComponent({
     id: String as () => string,
   },
   data() {
-    console.log(this.id);
-
     return {
-      title: "",
-      details: "",
+      title: "" as string,
+      details: "" as string,
     };
+  },
+  mounted() {
+    fetchData<Project>(`/projects/${this.id}`).then(({ title, details }) => {
+      this.title = title;
+      this.details = details;
+    });
   },
   methods: {
     handleSubmit(): void {
@@ -34,9 +40,7 @@ export default defineComponent({
       };
 
       updateData(`/projects/${this.id}`, project)
-        .then((res) => {
-          console.log(res);
-
+        .then(() => {
           this.$router.push({ name: "Home" });
         })
         .catch((err) => {

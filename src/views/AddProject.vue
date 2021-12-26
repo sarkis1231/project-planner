@@ -16,8 +16,8 @@ export default defineComponent({
   name: "AddProject",
   data() {
     return {
-      title: "",
-      details: "",
+      title: "" as string,
+      details: "" as string,
     };
   },
   methods: {
