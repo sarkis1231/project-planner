@@ -9,14 +9,33 @@ on:
     branches: [ main ]
 
 jobs:
-  build_vue:
+  build:
     runs-on: ubuntu-latest
-    name: Build Vue
+
     steps:
     - uses: actions/checkout@v2
-    - id: Build-Vue
-      uses: xRealNeon/VuePagesAction@1.0.1
+
+    - name: Generate static vuepress files
+      uses: actions/setup-node@v1
       with:
-        username: 'sarkis1231'
-        reponame: 'project-planner'
-        token: ${{ secrets.GITHUB_TOKEN }}
+        node-version: '12.x'
+    - run: yarn ci
+    - run: yarn build
+
+    - name: Init new repo in dist folder and commit generated files
+      run: |
+        cd docs/.vuepress/dist
+        git init
+        git add -A
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m 'deploy'
+
+    - name: Force push to destination branch
+      uses: ad-m/github-push-action@v0.5.0
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        # this might change depending on whether you are publishing a site for a normal repo or a user/organization repo
+        branch: gh-pages
+        force: true
+        directory: ./docs/.vuepress/dist
