@@ -1,3 +1,3 @@
-{
-  ("/project-planner/");
-}
+module.exports = {
+  publicPath: "/project-planner/",
+};
