@@ -8,7 +8,7 @@
         {{ project.title }}
       </h3>
       <div class="icons">
-        <span class="material-icons"> edit </span>
+        <span @click="handleEdit" class="material-icons"> edit </span>
         <span @click="deleteProjetc" class="material-icons"> delete </span>
         <span
           @click="toggleComplete"
@@ -27,9 +27,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { Project } from "../types/project";
-import { deleteData } from "../utils/deleteData";
-import { updateData } from "../utils/updateData";
+import { Project } from "@/types/project";
+import { deleteData } from "@/utils/deleteData";
+import { updateData } from "@/utils/updateData";
 
 export default defineComponent({
   name: "SingleProject",
@@ -61,6 +61,9 @@ export default defineComponent({
         .catch((err) => {
           console.log(err.message);
         });
+    },
+    handleEdit(): void {
+      this.$router.push(`/project/${this?.project?.id}`);
     },
   },
 });

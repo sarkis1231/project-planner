@@ -15,9 +15,9 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { fetchData } from "../utils/fetchData";
-import { Project } from "../types/project";
-import SingleProject from "../components/SingleProject.vue";
+import { fetchData } from "@/utils/fetchData";
+import { Project } from "@/types/project";
+import SingleProject from "@/components/SingleProject.vue";
 
 export default defineComponent({
   name: "Home",

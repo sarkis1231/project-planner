@@ -1,20 +1,25 @@
 <template>
   <form @submit.prevent="handleSubmit">
     <label>Title</label>
-    <input v-model="title" type="text" required />
+    <input type="text" v-model="title" required />
     <label>Details</label>
     <textarea v-model="details" required></textarea>
-    <button>Add Project</button>
+    <button>Update Project</button>
   </form>
 </template>
 
 <script lang="ts">
+import { updateData } from "@/utils/updateData";
 import { defineComponent } from "vue";
-import { addData } from "@/utils/addData";
 
 export default defineComponent({
-  name: "AddProject",
+  name: "EditProject",
+  props: {
+    id: String as () => string,
+  },
   data() {
+    console.log(this.id);
+
     return {
       title: "",
       details: "",
@@ -28,8 +33,10 @@ export default defineComponent({
         completed: false,
       };
 
-      addData("/projects", project)
-        .then(() => {
+      updateData(`/projects/${this.id}`, project)
+        .then((res) => {
+          console.log(res);
+
           this.$router.push({ name: "Home" });
         })
         .catch((err) => {
