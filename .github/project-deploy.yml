@@ -11,4 +11,4 @@ jobs:
       with:
         username: 'sarkis1231'
         reponame: 'project-planner'
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.PROJECT_PLANNER }}
