@@ -10,12 +10,12 @@
       "id": 2,
       "title": "Make markating email",
       "details": "Lorem ipsum",
-      "completed": true
+      "completed": false
     },
     {
       "title": "Hi there how are you",
       "details": "blah blah bllah",
-      "completed": true,
+      "completed": false,
       "id": 3
     }
   ]
