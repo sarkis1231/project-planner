@@ -1,16 +1,16 @@
 {
-    "projetcs": [
-        {
-            "id": 1,
-            "title": "Create new homepage banner",
-            "details": "Lorem ipsum",
-            "completed": false
-        },
-        {
-            "id": 2,
-            "title": "Make markating email",
-            "details": "Lorem ipsum",
-            "completed": true
-        }
-    ]
+  "projects": [
+    {
+      "id": 1,
+      "title": "Create new homepage banner",
+      "details": "Lorem ipsum",
+      "completed": true
+    },
+    {
+      "id": 2,
+      "title": "Make markating email",
+      "details": "Lorem ipsum",
+      "completed": false
+    }
+  ]
 }

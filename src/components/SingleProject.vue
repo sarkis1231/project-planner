@@ -1,5 +1,5 @@
 <template>
-  <div class="project">
+  <div class="project" :class="{ complete: project.completed }">
     <div class="actions">
       <h3
         title="Click on the project title to see the details"
@@ -10,7 +10,7 @@
       <div class="icons">
         <span class="material-icons"> edit </span>
         <span @click="deleteProjetc" class="material-icons"> delete </span>
-        <span class="material-icons"> done </span>
+        <span @click="toggleComplete" class="material-icons"> done </span>
       </div>
     </div>
     <div v-if="showDetails" class="details">
@@ -22,7 +22,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { Project } from "../types/project";
-import { fetchData } from "../utils/fetchData";
+import { deleteData } from "../utils/deleteData";
+import { updateData } from "../utils/updateData";
 
 export default defineComponent({
   name: "SingleProject",
@@ -36,12 +37,23 @@ export default defineComponent({
   },
   methods: {
     deleteProjetc(): void {
-      fetchData(`projetcs/${this?.project?.id}`, "DELETE")
+      deleteData(`/projects/${this?.project?.id}`)
         .then(() => {
           this.$emit("delete", this?.project?.id);
         })
         .catch((err) => {
           console.log(err);
+        });
+    },
+    toggleComplete(): void {
+      updateData(`/projects/${this?.project?.id}`, {
+        completed: !this.project?.completed,
+      })
+        .then(() => {
+          this.$emit("complete", this?.project?.id);
+        })
+        .catch((err) => {
+          console.log(err.message);
         });
     },
   },
@@ -55,7 +67,10 @@ export default defineComponent({
   padding: 10px 20px;
   border-radius: 4px;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.05);
-  border-left: 3px solid #e90074;
+  border-left: 4px solid #e90074;
+}
+.project.complete {
+  border-left: 4px solid #00ce89;
 }
 
 h3 {
