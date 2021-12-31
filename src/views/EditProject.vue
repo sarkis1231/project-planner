@@ -26,10 +26,14 @@ export default defineComponent({
     };
   },
   mounted() {
-    fetchData<Project>(`/projects/${this.id}`).then(({ title, details }) => {
-      this.title = title;
-      this.details = details;
-    });
+    fetchData<Project>(`/projects/${this.id}`)
+      .then(({ title, details }) => {
+        this.title = title;
+        this.details = details;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   methods: {
     handleSubmit(): void {
